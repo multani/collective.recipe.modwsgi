@@ -48,15 +48,15 @@ class Recipe(object):
                     "You need to specify either a paste configuration file")
             raise zc.buildout.UserError("No paste configuration given")
 
-        if "target" in options:
-            location = os.path.dirname(options["target"])
+    def install(self):
+        if "target" in self.options:
+            location = os.path.dirname(self.options["target"])
             if not os.path.isdir(location):
                 self.logger.error(
                     "The 'target' option refers to a directory that is not "
                     "valid: %s" % location)
                 raise zc.buildout.UserError("Invalid directory for target")
 
-    def install(self):
         egg = Eggs(self.buildout, self.options["recipe"], self.options)
         reqs, ws = egg.working_set()
         path = [pkg.location for pkg in ws]
